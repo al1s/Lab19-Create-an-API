@@ -1,12 +1,10 @@
-﻿using System;
+﻿using Lab19WebApi.Data;
+using Lab19WebApi.Models;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using Lab19WebApi.Data;
-using Lab19WebApi.Models;
 
 namespace Lab19WebApi.Controllers
 {
@@ -86,7 +84,11 @@ namespace Lab19WebApi.Controllers
         [HttpPost]
         public async Task<IActionResult> PostTodo([FromBody] Todo todo)
         {
-            if (todo.TodoId != 0) ModelState.AddModelError("Error", "Cannot insert explicit TodoId value");
+            if (todo.TodoId != 0)
+            {
+                ModelState.AddModelError("Error", "Cannot insert explicit TodoId value");
+            }
+
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
