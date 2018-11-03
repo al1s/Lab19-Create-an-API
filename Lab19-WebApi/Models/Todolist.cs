@@ -1,10 +1,9 @@
-﻿using System;
+﻿using Newtonsoft.Json;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Lab19WebApi.Models
 {
+    [JsonObject(IsReference = true)]
     public class Todolist
     {
         public int TodolistId { get; set; }
