@@ -47,10 +47,14 @@ namespace Lab19WebApi.Models.Services
 
         public void PutTodo(Todo todo)
         {
-            Todo _existingTodo = _todo.First(t => t.TodoId == todo.TodoId);
-            _existingTodo.Task = todo.Task;
-            _existingTodo.Finished = todo.Finished;
-            _existingTodo.TodolistId = todo.TodolistId;
+            try
+            {
+                Todo _existingTodo = _todo.First(t => t.TodoId == todo.TodoId);
+                _existingTodo.Task = todo.Task;
+                _existingTodo.Finished = todo.Finished;
+                _existingTodo.TodolistId = todo.TodolistId;
+            }
+            catch (Exception) { }
         }
         public async Task Commit() { }
 

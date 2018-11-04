@@ -119,8 +119,6 @@ namespace Lab19WebApi.Controllers
                 return NotFound();
             }
 
-            //_context.Todos.Remove(todo);
-            //await _context.SaveChangesAsync();
             await _todos.DeleteTodo(todo);
             return Ok(todo);
         }
