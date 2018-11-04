@@ -14,6 +14,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using System.IO;
+using Lab19WebApi.Models.Interfaces;
+using Lab19WebApi.Models.Services;
 
 namespace Lab19_WebApi
 {
@@ -31,8 +33,9 @@ namespace Lab19_WebApi
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
-            //services.AddDbContext<TodoListDBContext>(opt => opt.UseSqlServer(Configuration["ConnectionStrings:ProductionConnection"]));
-            services.AddDbContext<TodoListDBContext>(opt => opt.UseSqlServer(Configuration["ConnectionStrings:TestConnection"]));
+            services.AddDbContext<TodoListDBContext>(opt => opt.UseSqlServer(Configuration["ConnectionStrings:ProductionConnection"]));
+            //services.AddDbContext<TodoListDBContext>(opt => opt.UseSqlServer(Configuration["ConnectionStrings:TestConnection"]));
+            services.AddTransient<ITodo, TodoService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

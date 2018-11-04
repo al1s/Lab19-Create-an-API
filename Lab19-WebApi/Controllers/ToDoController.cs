@@ -1,5 +1,6 @@
 ﻿using Lab19WebApi.Data;
 using Lab19WebApi.Models;
+using Lab19WebApi.Models.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
@@ -12,18 +13,21 @@ namespace Lab19WebApi.Controllers
     [ApiController]
     public class ToDoController : ControllerBase
     {
-        private readonly TodoListDBContext _context;
+        //private readonly TodoListDBContext _context;
+        private readonly ITodo _todos;
 
-        public ToDoController(TodoListDBContext context)
+
+        public ToDoController(ITodo todos)
         {
-            _context = context;
+            _todos = todos;
         }
 
         // GET: api/ToDo
         [HttpGet]
-        public IEnumerable<Todo> GetTodo()
+        public async Task<IActionResult> GetTodo()
         {
-            return _context.Todos;
+            var result = await _todos.GetTodo();
+            return Ok(result);
         }
 
         // GET: api/ToDo/5
@@ -35,7 +39,7 @@ namespace Lab19WebApi.Controllers
                 return BadRequest(ModelState);
             }
 
-            var todo = await _context.Todos.FindAsync(id);
+            var todo = await _todos.GetTodo(id);
 
             if (todo == null)
             {
@@ -59,15 +63,15 @@ namespace Lab19WebApi.Controllers
                 return BadRequest();
             }
 
-            _context.Update(todo);
+            _todos.PutTodo(todo);
 
             try
             {
-                await _context.SaveChangesAsync();
+                await _todos.Commit();
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!TodoExists(id))
+                if (!_todos.TodoExists(id))
                 {
                     return NotFound();
                 }
@@ -94,8 +98,7 @@ namespace Lab19WebApi.Controllers
                 return BadRequest(ModelState);
             }
 
-            _context.Todos.Add(todo);
-            await _context.SaveChangesAsync();
+            await _todos.PostTodo(todo);
 
             return CreatedAtAction("GetTodo", new { id = todo.TodoId }, todo);
         }
@@ -109,21 +112,17 @@ namespace Lab19WebApi.Controllers
                 return BadRequest(ModelState);
             }
 
-            var todo = await _context.Todos.FindAsync(id);
+            var todo = await _todos.GetTodo(id);
+
             if (todo == null)
             {
                 return NotFound();
             }
 
-            _context.Todos.Remove(todo);
-            await _context.SaveChangesAsync();
-
+            //_context.Todos.Remove(todo);
+            //await _context.SaveChangesAsync();
+            await _todos.DeleteTodo(todo);
             return Ok(todo);
-        }
-
-        private bool TodoExists(int id)
-        {
-            return _context.Todos.Any(e => e.TodoId == id);
         }
     }
 }
