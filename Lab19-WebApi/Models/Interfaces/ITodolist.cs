@@ -6,11 +6,14 @@ namespace Lab19WebApi.Models.Interfaces
 {
     public interface ITodolist
     {
-        Task<IEnumerable<Todolist>> GetTodolist();
-        Task<IActionResult> GetTodolist(int id);
-        Task<IActionResult> PutTodolist(int id, Todolist todo);
-        Task<IActionResult> PostTodolist(Todolist todo);
-        Task<IActionResult> DeleteTodolist(int id);
-        Task<bool> TodolistExists(int id);
+        Task<ICollection<Todolist>> GetTodolist();
+        Task<Todolist> GetTodolist(int id);
+        void PutTodolist(Todolist todolist);
+        Task PostTodolist(Todolist todolist);
+        Task DeleteTodolist(Todolist todolist);
+        Task Commit();
+        bool TodolistExists(int id);
+        Task<ICollection<Todo>> GetTodos(int id);
+        Task DeleteTodos(ICollection<Todo> todos);
     }
 }
