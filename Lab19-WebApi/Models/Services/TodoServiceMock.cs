@@ -9,6 +9,9 @@ using System.Threading.Tasks;
 
 namespace Lab19WebApi.Models.Services
 {
+    /// <summary>
+    /// Mock service to test Todos
+    /// </summary>
     public class TodoServiceMock : ITodo
     {
         private readonly List<Todo> _todo;

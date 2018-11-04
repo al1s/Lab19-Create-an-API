@@ -4,6 +4,14 @@
 
 An API in .NET Core that conducts the standard HTTP verbs (Get,Put,Post,Delete) for a “To-Do” list. The “To-Do” list consists of individual tasks that can be saved into the database and extracted as needed.
 
+## API Documentation
+
+[via Postman](https://documenter.getpostman.com/view/4382792/RzZ6GzwE)
+
+## Demo (short lived)
+
+[Azure](https://todolist19.azurewebsites.net/api/)
+
 ## Spec
 
 - 2 Controllers with CRUD endpoints (You may use an empty API controller template for this if you wish)
