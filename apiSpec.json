@@ -1,0 +1,369 @@
+{
+  "x-generator": "NSwag v11.20.1.0 (NJsonSchema v9.11.0.0 (Newtonsoft.Json v11.0.0.0))",
+  "swagger": "2.0",
+  "info": {
+    "title": "My Title",
+    "version": "1.0.0"
+  },
+  "consumes": [
+    "application/json-patch+json",
+    "application/json",
+    "text/json",
+    "application/*+json"
+  ],
+  "paths": {
+    "/api/ToDo": {
+      "get": {
+        "tags": [
+          "ToDo"
+        ],
+        "operationId": "ToDo_GetTodoAll",
+        "produces": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "responses": {
+          "200": {
+            "x-nullable": true,
+            "description": "",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Todo"
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "ToDo"
+        ],
+        "operationId": "ToDo_PostTodo",
+        "consumes": [
+          "application/json-patch+json",
+          "application/json",
+          "text/json",
+          "application/*+json"
+        ],
+        "parameters": [
+          {
+            "name": "todo",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Todo"
+            },
+            "x-nullable": false
+          }
+        ],
+        "responses": {
+          "200": {
+            "x-nullable": true,
+            "description": "",
+            "schema": {
+              "type": "file"
+            }
+          }
+        }
+      }
+    },
+    "/api/ToDo/{id}": {
+      "get": {
+        "tags": [
+          "ToDo"
+        ],
+        "operationId": "ToDo_GetTodo",
+        "parameters": [
+          {
+            "type": "integer",
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "format": "int32",
+            "x-nullable": false
+          }
+        ],
+        "responses": {
+          "200": {
+            "x-nullable": true,
+            "description": "",
+            "schema": {
+              "type": "file"
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "ToDo"
+        ],
+        "operationId": "ToDo_PutTodo",
+        "consumes": [
+          "application/json-patch+json",
+          "application/json",
+          "text/json",
+          "application/*+json"
+        ],
+        "parameters": [
+          {
+            "type": "integer",
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "format": "int32",
+            "x-nullable": false
+          },
+          {
+            "name": "todo",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Todo"
+            },
+            "x-nullable": false
+          }
+        ],
+        "responses": {
+          "200": {
+            "x-nullable": true,
+            "description": "",
+            "schema": {
+              "type": "file"
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "ToDo"
+        ],
+        "operationId": "ToDo_DeleteTodo",
+        "parameters": [
+          {
+            "type": "integer",
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "format": "int32",
+            "x-nullable": false
+          }
+        ],
+        "responses": {
+          "200": {
+            "x-nullable": true,
+            "description": "",
+            "schema": {
+              "type": "file"
+            }
+          }
+        }
+      }
+    },
+    "/api/ToDoList": {
+      "get": {
+        "tags": [
+          "ToDoList"
+        ],
+        "operationId": "ToDoList_GetTodolists",
+        "produces": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "responses": {
+          "200": {
+            "x-nullable": true,
+            "description": "",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Todolist"
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "ToDoList"
+        ],
+        "operationId": "ToDoList_PostTodolist",
+        "consumes": [
+          "application/json-patch+json",
+          "application/json",
+          "text/json",
+          "application/*+json"
+        ],
+        "parameters": [
+          {
+            "name": "todolist",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Todolist"
+            },
+            "x-nullable": false
+          }
+        ],
+        "responses": {
+          "200": {
+            "x-nullable": true,
+            "description": "",
+            "schema": {
+              "type": "file"
+            }
+          }
+        }
+      }
+    },
+    "/api/ToDoList/{id}": {
+      "get": {
+        "tags": [
+          "ToDoList"
+        ],
+        "operationId": "ToDoList_GetTodolist",
+        "parameters": [
+          {
+            "type": "integer",
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "format": "int32",
+            "x-nullable": false
+          }
+        ],
+        "responses": {
+          "200": {
+            "x-nullable": true,
+            "description": "",
+            "schema": {
+              "type": "file"
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "ToDoList"
+        ],
+        "operationId": "ToDoList_PutTodolist",
+        "consumes": [
+          "application/json-patch+json",
+          "application/json",
+          "text/json",
+          "application/*+json"
+        ],
+        "parameters": [
+          {
+            "type": "integer",
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "format": "int32",
+            "x-nullable": false
+          },
+          {
+            "name": "todolist",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Todolist"
+            },
+            "x-nullable": false
+          }
+        ],
+        "responses": {
+          "200": {
+            "x-nullable": true,
+            "description": "",
+            "schema": {
+              "type": "file"
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "ToDoList"
+        ],
+        "operationId": "ToDoList_DeleteTodolist",
+        "parameters": [
+          {
+            "type": "integer",
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "format": "int32",
+            "x-nullable": false
+          }
+        ],
+        "responses": {
+          "200": {
+            "x-nullable": true,
+            "description": "",
+            "schema": {
+              "type": "file"
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "Todo": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "todoId",
+        "finished",
+        "todolistId"
+      ],
+      "properties": {
+        "todoId": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "task": {
+          "type": "string"
+        },
+        "details": {
+          "type": "string"
+        },
+        "finished": {
+          "type": "boolean"
+        },
+        "todolistId": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "todolist": {
+          "$ref": "#/definitions/Todolist"
+        }
+      }
+    },
+    "Todolist": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "todolistId"
+      ],
+      "properties": {
+        "todolistId": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "name": {
+          "type": "string"
+        },
+        "todos": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Todo"
+          }
+        }
+      }
+    }
+  }
+}

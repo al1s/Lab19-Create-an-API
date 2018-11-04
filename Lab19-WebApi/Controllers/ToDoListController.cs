@@ -1,12 +1,11 @@
-﻿using System;
+﻿using Lab19WebApi.Data;
+using Lab19WebApi.Models;
+using Lab19WebApi.Models.Interfaces;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using Lab19WebApi.Data;
-using Lab19WebApi.Models;
 
 namespace Lab19WebApi.Controllers
 {
@@ -14,18 +13,19 @@ namespace Lab19WebApi.Controllers
     [ApiController]
     public class ToDoListController : ControllerBase
     {
-        private readonly TodoListDBContext _context;
+        private readonly ITodolist _todolist;
 
-        public ToDoListController(TodoListDBContext context)
+        public ToDoListController(ITodolist todolist)
         {
-            _context = context;
+            _todolist = todolist;
         }
 
         // GET: api/ToDoList
         [HttpGet]
-        public IEnumerable<Todolist> GetTodolists()
+        public async Task<IActionResult> GetTodolists()
         {
-            return _context.Todolists;
+            var result = await _todolist.GetTodolist();
+            return Ok(result);
         }
 
         // GET: api/ToDoList/5
@@ -37,14 +37,14 @@ namespace Lab19WebApi.Controllers
                 return BadRequest(ModelState);
             }
 
-            var todolist = await _context.Todolists.FindAsync(id);
+            var todolist = await _todolist.GetTodolist(id);
 
             if (todolist == null)
             {
                 return NotFound();
             }
 
-            todolist.Todos = await _context.Todos.Where(t => t.TodolistId == id).ToListAsync();
+            todolist.Todos = await _todolist.GetTodos(id);
             return Ok(todolist);
         }
 
@@ -61,14 +61,14 @@ namespace Lab19WebApi.Controllers
             {
                 return BadRequest();
             }
-            _context.Update(todolist);
+            _todolist.PutTodolist(todolist);
             try
             {
-                await _context.SaveChangesAsync();
+                await _todolist.Commit();
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!TodolistExists(id))
+                if (!_todolist.TodolistExists(id))
                 {
                     return NotFound();
                 }
@@ -85,14 +85,17 @@ namespace Lab19WebApi.Controllers
         [HttpPost]
         public async Task<IActionResult> PostTodolist([FromBody] Todolist todolist)
         {
-            if (todolist.TodolistId != 0) ModelState.AddModelError("Error", "Cannot insert explicit TodolistId value");
+            if (todolist.TodolistId != 0)
+            {
+                ModelState.AddModelError("Error", "Cannot insert explicit TodolistId value");
+            }
+
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            _context.Todolists.Add(todolist);
-            await _context.SaveChangesAsync();
+            await _todolist.PostTodolist(todolist);
 
             return CreatedAtAction("GetTodolist", new { id = todolist.TodolistId }, todolist);
         }
@@ -106,26 +109,18 @@ namespace Lab19WebApi.Controllers
                 return BadRequest(ModelState);
             }
 
-            var todolist = await _context.Todolists.FindAsync(id);
+            var todolist = await _todolist.GetTodolist(id);
+
             if (todolist == null)
             {
                 return NotFound();
             }
 
-            todolist.Todos = await _context.Todos.Where(t => t.TodolistId == id).ToListAsync();
-            foreach (var todo in todolist.Todos)
-            {
-                _context.Todos.Remove(todo);
-            }
-            _context.Todolists.Remove(todolist);
-            await _context.SaveChangesAsync();
+            todolist.Todos = await _todolist.GetTodos(id);
+            await _todolist.DeleteTodos(todolist.Todos);
+            await _todolist.DeleteTodolist(todolist);
 
             return Ok(todolist);
-        }
-
-        private bool TodolistExists(int id)
-        {
-            return _context.Todolists.Any(e => e.TodolistId == id);
         }
     }
 }
