@@ -9,7 +9,7 @@ using Lab19WebApi.Models;
 
 namespace Lab19WebApiTests
 {
-    public class TodolistTest
+    public class TodoTest
     {
         ToDoController _controller;
         ITodo _service;
@@ -17,10 +17,10 @@ namespace Lab19WebApiTests
         /// <summary>
         /// Constructor to feed controller with mock service provider
         /// </summary>
-        public TodolistTest()
+        public TodoTest()
         {
-            _service = new TodolistServiceMock();
-            _controller = new ToDoListController(_service);
+            _service = new TodoServiceMock();
+            _controller = new ToDoController(_service);
         }
         /// <summary>
         /// Can get Ok result for GET /api/todo

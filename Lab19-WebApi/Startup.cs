@@ -36,6 +36,7 @@ namespace Lab19_WebApi
             services.AddDbContext<TodoListDBContext>(opt => opt.UseSqlServer(Configuration["ConnectionStrings:ProductionConnection"]));
             //services.AddDbContext<TodoListDBContext>(opt => opt.UseSqlServer(Configuration["ConnectionStrings:TestConnection"]));
             services.AddTransient<ITodo, TodoService>();
+            services.AddTransient<ITodolist, TodolistService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
